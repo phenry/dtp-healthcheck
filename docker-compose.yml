@@ -1,0 +1,61 @@
+#web:
+#  restart: always
+#  build: ./
+#  expose:
+#    - "5000"
+#  command: /usr/local/bin/gunicorn -w 2 -b :5000 app:app
+
+#nginx:
+#  restart: always
+#  build: ./nginx/
+#  ports:
+#    - "9000:9000"
+#  links:
+#    - web:web
+
+
+
+version: '3'
+ 
+services:
+ web:
+   restart: always
+   build: ./web
+   expose:
+     - "5000"
+   ports:
+     - "5000:5000"
+#   volumes:
+#     - /usr/src/app/project/static
+   command: /usr/local/bin/gunicorn -w 2 -b :5000 app:app
+#   depends_on:
+#     - postgres
+ 
+ nginx:
+   restart: always
+   build: ./nginx
+   ports:
+     - "9000:9000"
+#   volumes:
+#     - /www/static
+#   volumes_from:
+#     - web
+#   depends_on:
+#     - web
+   links:
+     - web:web
+ 
+ 
+# data:
+#   image: postgres:9.6
+#   volumes:
+#     - /var/lib/postgresql
+#   command: "true"
+ 
+# postgres:
+#   restart: always
+#   build: ./postgresql
+#   volumes_from:
+#     - data
+#   ports:
+#     - "5432:5432"
