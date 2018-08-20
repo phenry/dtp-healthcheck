@@ -18,32 +18,38 @@
 version: '3'
  
 services:
- web:
-   restart: always
-   build: ./web
-   expose:
-     - "5000"
-   ports:
-     - "5000:5000"
+  web:
+    build: ./web
+#    env_file: .env
+#    environment:
+#      - URL='[ "http://httpbin.org/status/200", "http://httpbin.org/status/200" ]'
+#      - URL=$URL
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    command: /usr/local/bin/gunicorn -w 2 -b :5000 app:app
+    #command: /usr/local/bin/gunicorn -w 2 -b 127.0.0.1:5000 app:app
 #   volumes:
 #     - /usr/src/app/project/static
-   command: /usr/local/bin/gunicorn -w 2 -b :5000 app:app
 #   depends_on:
 #     - postgres
- 
- nginx:
-   restart: always
-   build: ./nginx
-   ports:
-     - "9000:9000"
+
+##  nginx:
+##    restart: always
+##    build: ./nginx
+##    expose:
+##      - "9000"
+##    ports:
+##      - "9000:9000"
 #   volumes:
 #     - /www/static
 #   volumes_from:
 #     - web
 #   depends_on:
 #     - web
-   links:
-     - web:web
+##    links:
+##    - web:web
  
  
 # data:

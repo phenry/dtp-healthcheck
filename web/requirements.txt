@@ -1,3 +1,4 @@
+environs
 flask
 gunicorn
 healthcheck  # https://github.com/Runscope/healthcheck
